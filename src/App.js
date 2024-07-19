@@ -1,6 +1,6 @@
 //U99796912
 import React, { useState, useEffect } from 'react';
-import Gallery from './Gallery';
+import Gallery from './components/Gallery';
 
 const App = () => {
   const [tours, setTours] = useState([]);
