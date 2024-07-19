@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Gallery from './components/Gallery';
 
-function App() {
+const App = () => {
+  const [tours, setTours] = useState([]);
+
+  const fetchTours = async () => {
+    try {
+      const response = await fetch('https://course-api.com/react-tours-project');
+      const data = await response.json();
+      setTours(data);
+    } catch (error) {
+      console.error('Error fetching tours:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTours();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <Gallery tours={tours} setTours={setTours} />
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
