@@ -23,9 +23,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" exact>
-          <Gallery tours={tours} setTours={setTours} />
-        </Route>
+        <Route path="/" element={<Gallery tours={tours} setTours={setTours} />} />
       </Routes>
     </Router>
   );
