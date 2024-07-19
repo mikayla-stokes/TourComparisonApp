@@ -22,11 +22,11 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route path="/" exact>
           <Gallery tours={tours} setTours={setTours} />
         </Route>
-      </Switch>
+      </Routes>
     </Router>
   );
 };
