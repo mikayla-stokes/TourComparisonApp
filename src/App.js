@@ -1,25 +1,37 @@
 //U99796912
-import React from 'react';
-import './components/Gallery.css';
+import React, { useState, useEffect } from 'react';
+import Gallery from './components/Gallery';
 
-const Gallery = ({ tours, setTours }) => {
-  const removeTour = (id) => {
-    setTours(tours.filter((tour) => tour.id !== id));
-  };
+const App = () => {
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('https://course-api.com/react-tours-project');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        setTours(data);
+      } catch (error) {
+        setError(error);
+      }
+      setLoading(false);
+    };
+
+    fetchTours();
+  }, []);
+
+  if (loading) return <h2>Loading...</h2>;
+  if (error) return <h2>Error: {error.message}</h2>;
 
   return (
-    <div className="gallery">
-      {tours.map((tour) => (
-        <div key={tour.id} className="tour-card">
-          <img src={tour.image} alt={tour.name} />
-          <h2>{tour.name}</h2>
-          <h4>{tour.price}</h4>
-          <p>{tour.info}</p>
-          <button onClick={() => removeTour(tour.id)}>Not Interested</button>
-        </div>
-      ))}
+    <div>
+      <Gallery tours={tours} setTours={setTours} />
     </div>
   );
 };
 
-export default Gallery;
+export default App;

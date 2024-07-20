@@ -1,14 +1,19 @@
 import React from 'react';
+import './Gallery.css';
 
 const Gallery = ({ tours, setTours }) => {
   const removeTour = (id) => {
     setTours(tours.filter((tour) => tour.id !== id));
   };
 
+  if (!Array.isArray(tours) || tours.length === 0) {
+    return <h2>No tours available</h2>;
+  }
+
   return (
-    <div>
+    <div className="gallery">
       {tours.map((tour) => (
-        <div key={tour.id}>
+        <div key={tour.id} className="tour-card">
           <img src={tour.image} alt={tour.name} />
           <h2>{tour.name}</h2>
           <h4>{tour.price}</h4>
